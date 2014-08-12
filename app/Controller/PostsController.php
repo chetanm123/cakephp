@@ -1,7 +1,10 @@
 <?php
 class PostsController extends AppController{
 	public $helpers = array('HTML','Form','Session');
-	public $component=array('Session');
+	public $component=array(
+		'Session',
+		'Auth'=>array('className'=>'MyAuth');
+		);
 
 	public function index(){
 		$this->set('posts',$this->Post->find('all'));
@@ -61,6 +64,15 @@ class PostsController extends AppController{
 			$this->Session->setFlash(__("The post with id : %s has been deleted.",h($id)));
 		}
 		return $this->redirect(array('action'=>'index'));
+	}
+
+	public function beforeFilter() {
+		$this->Auth->authorize = array('controller');
+		$this->Auth->loginAction = array(
+		'controller' => 'users',
+		'action' => 'login'
+		);
+		$this->Cookie->name = 'CookieMonster';
 	}
 }
 ?>
