@@ -3,7 +3,7 @@ class PostsController extends AppController{
 	public $helpers = array('HTML','Form','Session');
 	public $component=array(
 		'Session',
-		'Auth'=>array('className'=>'MyAuth');
+		'Auth'=>array('className'=>'MyAuth')
 		);
 
 	public function index(){
@@ -67,6 +67,7 @@ class PostsController extends AppController{
 	}
 
 	public function beforeFilter() {
+		parent::beforeFilter();
 		$this->Auth->authorize = array('controller');
 		$this->Auth->loginAction = array(
 		'controller' => 'users',
