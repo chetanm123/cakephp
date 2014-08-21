@@ -66,6 +66,7 @@
 		}
 
 		public function login(){
+			//echo $this->Auth->redirect();die;
 			if($this->request->is('post')){
 				if($this->Auth->login()){
 					return $this->redirect($this->Auth->redirect());
