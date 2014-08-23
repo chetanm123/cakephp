@@ -31,7 +31,7 @@ App::uses('Controller', 'Controller');
  * @link		http://book.cakephp.org/2.0/en/controllers.html#the-app-controller
  */
 class AppController extends Controller {
-	public $components = array(
+	/*public $components = array(
 		'Session',
 		'Auth'=>array(
 				'loginRedirect'=>array(
@@ -68,5 +68,24 @@ class AppController extends Controller {
 			return true;
 		}
 		return false;
+	}*/
+
+	public $components=	array('Auth','Session');
+
+	public function beforeFilter(){
+		$this->Auth->authorize=array('Controller');
+		$this->Auth->authenticate=array(
+			'all'=>array(
+				'scope'=>array('User.is_active'=>1)
+			),
+			'Form'
+		);
+	}
+
+	public function isAuthorized($user){
+		if(($this->params['prefix']==='admin') && ($user['is_admin']!=1)){
+			return false;
+		}
+		return true;
 	}
 }

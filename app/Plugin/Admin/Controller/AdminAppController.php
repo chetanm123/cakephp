@@ -1,5 +1,5 @@
 <?php
-class AdminAppController extends AppController
+class AdminAppController extends Controller
 {
 	public $components = array(
 		'Session',
@@ -23,11 +23,11 @@ class AdminAppController extends AppController
 		'Cookie'
 		);
 
-	public $allowedPlugins=array();
+	
 
 	public function beforeFilter(){
 		parent::beforeFilter();
-		$this->Auth->allow('index','view');
+		$this->Auth->allow('view');
 		$this->set('logged_in',$this->Auth->login());
 		$this->set('current_user',$this->Auth->user());
 	}
